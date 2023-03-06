@@ -1,39 +1,38 @@
 from config.method.configuration_loader import yaml_loader
 from database.model.database import MySQLDatabase
-from mappers.picking_systems_mapper import PickingSystemsMapper
+from database.queries.picking_system_queries import *
+from database.queries.resource_queries import *
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # ------------------------------------------------ # CONFIGURATION # ------------------------------------------------- #
 # -------------------------------------------------------------------------------------------------------------------- #
 
-STR_DATABASE_CONFIG_FILE = "config/file/database.yaml"
-STR_MQTT_CONFIG_FILE = "config/file/mqtt_configuration_client.yaml"
-STR_RESOURCES_CONFIG_FILE = "config/file/resources.yaml"
+STR_DATABASE_CONFIG_FILE = "../../config/file/database.yaml"
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------- # MAIN # ------------------------------------------------------ #
 # -------------------------------------------------------------------------------------------------------------------- #
 
-# executing the code (MQTTs)
-if __name__ == '__main__':
-    # loading database configuration
+if __name__ == "__main__":
+    # LOADING DATABASE CONFIGURATION
     db_params = yaml_loader(STR_DATABASE_CONFIG_FILE)
 
-    # creating a MySQLDatabase object
+    # CREATING A MySQLDatabase OBJECT
     myDB = MySQLDatabase(db_params["host"], db_params["user"], db_params["password"], db_params["charset"])
 
-    # opening connection with MySQL and choosing the right database
+    # STARTING CONNECTION
     myDB.start_connection()
+
+    # CHOOSING DATABASE
     myDB.choose_database(db_params["chosen_database"])
 
-    # creating an object PickingSystemsMapper
-    picking_system_mapper = PickingSystemsMapper(myDB)
+    # REMOVING TABLES
+    myDB.execute_query(delete_resource_table())
+    myDB.execute_query(delete_picking_system_table())
 
-    # loading mqtt client configuration
-    mqtt_params = yaml_loader(STR_MQTT_CONFIG_FILE)
+    # DROPPING DATABASE
+    myDB.destroy_database(db_params["chosen_database"])
 
-
-
-    # closing connection with MySQL
+    # CLOSING CONNECTION
     myDB.close_connection()
