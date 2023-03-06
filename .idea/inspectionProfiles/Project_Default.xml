@@ -1,0 +1,84 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="29">
+            <item index="0" class="java.lang.String" itemvalue="depthai" />
+            <item index="1" class="java.lang.String" itemvalue="tensorflow-estimator" />
+            <item index="2" class="java.lang.String" itemvalue="opt-einsum" />
+            <item index="3" class="java.lang.String" itemvalue="PyOpenGL-accelerate" />
+            <item index="4" class="java.lang.String" itemvalue="torchvision" />
+            <item index="5" class="java.lang.String" itemvalue="importlib-metadata" />
+            <item index="6" class="java.lang.String" itemvalue="pyassimp" />
+            <item index="7" class="java.lang.String" itemvalue="tensorflow" />
+            <item index="8" class="java.lang.String" itemvalue="pyrealsense2" />
+            <item index="9" class="java.lang.String" itemvalue="tensorboard-plugin-wit" />
+            <item index="10" class="java.lang.String" itemvalue="pkg_resources" />
+            <item index="11" class="java.lang.String" itemvalue="imutils" />
+            <item index="12" class="java.lang.String" itemvalue="tensorflow-gpu" />
+            <item index="13" class="java.lang.String" itemvalue="PyOpenGL" />
+            <item index="14" class="java.lang.String" itemvalue="scipy" />
+            <item index="15" class="java.lang.String" itemvalue="tifffile" />
+            <item index="16" class="java.lang.String" itemvalue="opencv-python" />
+            <item index="17" class="java.lang.String" itemvalue="cyglfw3" />
+            <item index="18" class="java.lang.String" itemvalue="pymodbus" />
+            <item index="19" class="java.lang.String" itemvalue="progressbar2" />
+            <item index="20" class="java.lang.String" itemvalue="tensorboard-data-server" />
+            <item index="21" class="java.lang.String" itemvalue="torch" />
+            <item index="22" class="java.lang.String" itemvalue="typing-extensions" />
+            <item index="23" class="java.lang.String" itemvalue="tensorboard" />
+            <item index="24" class="java.lang.String" itemvalue="matplotlib" />
+            <item index="25" class="java.lang.String" itemvalue="progressbar" />
+            <item index="26" class="java.lang.String" itemvalue="grpcio" />
+            <item index="27" class="java.lang.String" itemvalue="sklearn" />
+            <item index="28" class="java.lang.String" itemvalue="googledrivedownloader" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E501" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N803" />
+          <option value="N806" />
+          <option value="N802" />
+          <option value="N812" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyShadowingBuiltinsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredNames">
+        <list>
+          <option value="type" />
+          <option value="eval" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="code.process.test.test.realsense_l515" />
+          <option value="code.process.test.test.realsense_d435i" />
+          <option value="code.process.test.test.picking_box" />
+          <option value="code.process.test.test.ransac_icp" />
+          <option value="code.process.test.test.RealsenseL515" />
+          <option value="code.process.test.test.PickingBox" />
+          <option value="code.process.test.test.RansacICP" />
+          <option value="main.mysql" />
+          <option value="drive_downloader.*" />
+          <option value="models.picking_systems_mapper.PickingSystemsMapper.__getitem__" />
+          <option value="process.auth_consumer.paho" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

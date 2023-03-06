@@ -1,0 +1,8 @@
+client_id: "MySQL_DB_consumer"
+broker_ip: "155.185.4.4"
+broker_port: 7883
+account_topic_prefix: "/iot/user/unimore-fum-lab/"
+username: "unimore-fum-lab"
+password: "wxugudolcbjttoke"
+interval_s: 1
+timeout_s: 1

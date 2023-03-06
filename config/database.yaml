@@ -1,0 +1,5 @@
+host: "localhost"
+user: "root"
+password: "HakertzDB32!"
+charset: "utf8"
+chosen_database: "api_database"
