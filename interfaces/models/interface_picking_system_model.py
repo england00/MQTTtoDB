@@ -16,10 +16,6 @@ class IPickingSystemModel(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_resource_path_list(self):
-        pass
-
-    @abc.abstractmethod
     def set_pick_and_place_id(self, pick_and_place_id):
         pass
 
@@ -29,8 +25,4 @@ class IPickingSystemModel(abc.ABC):
 
     @abc.abstractmethod
     def set_resource_mapper(self, resource_mapper):
-        pass
-
-    @abc.abstractmethod
-    def set_resource_path_list(self, resource_path_list):
         pass

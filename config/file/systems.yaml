@@ -1,0 +1,12 @@
+systems:
+  system1:
+    pick_and_place_id: "000001"
+    endpoint: "/000001"
+
+  system2:
+    pick_and_place_id: "000002"
+    endpoint: "/000002"
+
+  system3:
+    pick_and_place_id: "000003"
+    endpoint: "/000003"

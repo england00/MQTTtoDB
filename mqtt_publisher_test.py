@@ -10,7 +10,6 @@ from mqtt.subscriber.mqtt_subscriber_client import MqttSubscriberClient
 STR_DATABASE_CONFIG_FILE = "config/file/database.yaml"
 STR_MQTT_CONFIG_FILE = "config/file/mqtt_configuration_client.yaml"
 STR_RESOURCES_CONFIG_FILE = "config/file/resources.yaml"
-STR_SYSTEMS_CONFIG_FILE = "config/file/systems.yaml"
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
@@ -29,21 +28,12 @@ if __name__ == '__main__':
     myDB.start_connection()
     myDB.choose_database(db_params["chosen_database"])
 
-    # loading systems configuration
-    systems_params = yaml_loader(STR_SYSTEMS_CONFIG_FILE)
-
     # creating an object PickingSystemsMapper
-    picking_system_mapper = PickingSystemsMapper(myDB, systems_params)
+    picking_system_mapper = PickingSystemsMapper(myDB)
 
-    # loading mqtt client configuration
-    mqtt_params = yaml_loader(STR_MQTT_CONFIG_FILE)
-
-    # creating MqttSubscriberClient object
-    sub = MqttSubscriberClient(mqtt_params)
-
-    # opening connection with a broker in cloud
-    sub.connect()
-    sub.start_forever()
+    for system in picking_system_mapper.get_systems().values():
+        for resource in system.get_resource_mapper().get_resources().values():
+            print(resource)
 
     # closing connection with MySQL
     myDB.close_connection()
