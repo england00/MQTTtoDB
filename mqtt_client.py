@@ -39,7 +39,7 @@ if __name__ == '__main__':
     mqtt_params = yaml_loader(STR_MQTT_CONFIG_FILE)
 
     # creating MqttSubscriberClient object
-    sub = MqttSubscriberClient(mqtt_params)
+    sub = MqttSubscriberClient(mqtt_params, picking_system_mapper)
 
     # opening connection with a broker in cloud
     sub.connect()

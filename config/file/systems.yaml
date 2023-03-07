@@ -1,12 +1,12 @@
 systems:
   system1:
-    pick_and_place_id: "000001"
-    endpoint: "/000001"
+    pick_and_place_id: "pnp_unimore_fum_lab"
+    endpoint: "/pnp_unimore_fum_lab"
 
   system2:
-    pick_and_place_id: "000002"
-    endpoint: "/000002"
+    pick_and_place_id: "pnp_unimore_hipert_lab"
+    endpoint: "/pnp_unimore_hipert_lab"
 
   system3:
-    pick_and_place_id: "000003"
-    endpoint: "/000003"
+    pick_and_place_id: "pnp_unimore_arscontrol_lab"
+    endpoint: "/pnp_unimore_arscontrol_lab"
