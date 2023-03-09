@@ -1,14 +1,15 @@
 import logging
 import yaml
-from models.resource_model import ResourceModel
 from error.configuration_file_error import ConfigurationFileError
+from database.queries.resource_queries import *
 
 
 class ResourcesMapper:
     _STR_RESOURCE_CONFIG_FILE = "./config/file/resources.yaml"
 
-    def __init__(self, config_object=None, config_file_path=None, base_topic=None, system_id=None):
+    def __init__(self, config_object=None, config_file_path=None, base_topic=None, system_id=None, database=None):
         self._resources = {}
+        self.myDB = database
 
         if config_object is not None:
             self._mapper = config_object
@@ -49,7 +50,7 @@ class ResourcesMapper:
 
     def update_resource(self, update_resource):
         if isinstance(update_resource, ResourceModel):
-            # self.myDB.execute_query(modify_row_resource_table(update_resource))
+            self.myDB.execute_query(modify_row_resource_table(update_resource))
             self._resources[update_resource.get_uuid()] = update_resource
         else:
             raise TypeError("Error updating the resource. Only ResourceModel objects are allowed")

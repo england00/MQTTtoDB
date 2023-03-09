@@ -73,6 +73,7 @@ class MySQLDatabase(IDatabase):
     def read_query(self, query):
         self.cursor = self.connection.cursor()
         try:
+            self.connection.commit()
             self.cursor.execute(query)
             return self.cursor.fetchall()
 

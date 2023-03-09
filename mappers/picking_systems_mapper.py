@@ -14,7 +14,8 @@ class PickingSystemsMapper:
         for key in self.mapper["systems"]:
             picking_system_model = PickingSystemModel(pick_and_place_id=self.mapper["systems"][key]["pick_and_place_id"],
                                                       endpoint=self.mapper["systems"][key]["endpoint"],
-                                                      resource_mapper=ResourcesMapper(system_id=self.mapper["systems"][key]["pick_and_place_id"]))
+                                                      resource_mapper=ResourcesMapper(system_id=self.mapper["systems"][key]["pick_and_place_id"],
+                                                                                      database=self.myDB))
             self.picking_system_dictionary[picking_system_model.pick_and_place_id] = picking_system_model
 
     def get_systems(self):

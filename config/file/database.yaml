@@ -1,5 +1,5 @@
 host: "localhost"
-user: "root"
-password: "HakertzDB32!"
+user: "MQTT_client"
+password: "HakertzDB64!"
 charset: "utf8"
 chosen_database: "api_database"

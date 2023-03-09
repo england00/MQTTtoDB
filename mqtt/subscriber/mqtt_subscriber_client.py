@@ -31,15 +31,11 @@ class MqttSubscriberClient(IMqttSubscriberClient):
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code {}".format(rc))
-        # self.mqtt_subscriber_client.subscribe("{}/#".format(self.base_topic))
-        # print("Subscribed to: " + self.base_topic + "/#")
         for resource_topic in self.topic_list:
-            self.mqtt_subscriber_client.subscribe("{}/+/{}/{}".format(self.base_topic, resource_topic, "telemetry"))
-            print("Subscribed to: " + self.base_topic + "/+/" + resource_topic + "/telemetry")
+            self.mqtt_subscriber_client.subscribe("{}/+/{}".format(self.base_topic, resource_topic))
+            print("Subscribed to: " + self.base_topic + "/+/" + resource_topic)
 
     def on_message(self, client, userdata, message):
-        # message_payload = str(message.payload.decode("utf-8"))
-        # print(message.topic, message_payload)
         for system in self.system_mapper.get_systems().values():
             if mqtt.topic_matches_sub(self.base_topic,
                                       str(message.topic).split("/{}".format(system.get_pick_and_place_id()))[0]):
@@ -51,6 +47,7 @@ class MqttSubscriberClient(IMqttSubscriberClient):
                         senMLPack.from_json(message_payload)
                         form = FormatJsonSenML()
                         form.from_format(senMLPack, resource)
+                        system.get_resource_mapper().update_resource(resource)
 
     def connect(self):
         self.mqtt_subscriber_client.connect(self.broker_ip_address, self.broker_port)
