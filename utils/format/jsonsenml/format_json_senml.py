@@ -51,7 +51,29 @@ class FormatJsonSenML(IFormat):
 
     def from_format(self, senml_pack, resource: ResourceModel):
         senml_pack = senml_pack.get_senml_pack()
+
+        # UUID
+        bn = senml_pack[0].get_bn()
+        if bn is not None:
+            resource.set_uuid(bn)
+
+        # VERSION
+        bver = senml_pack[0].get_bver()
+        if bver is not None:
+            resource.set_version(bver)
+
         if len(senml_pack) == 1:
+            # NAME
+            n = senml_pack[0].get_n()
+            if n is not None:
+                resource.set_name(n)
+
+            # UNIT
+            bu = senml_pack[0].get_bu()
+            if bu is not None:
+                resource.set_unit(bu)
+
+            # VALUE
             v = senml_pack[0].get_v()
             vb = senml_pack[0].get_vb()
             vs = senml_pack[0].get_vs()
@@ -61,9 +83,26 @@ class FormatJsonSenML(IFormat):
                 resource.set_value(vb)
             if vs is not None:
                 resource.set_value(vs)
+
         else:
+            resource.set_name([])
+            resource.set_unit([])
             resource.set_value([])
             for p in senml_pack:
+                # NAME
+                n = p.get_n()
+                if n is not None:
+                    resource.get_name().append(p.get_n())
+
+                # UNIT
+                bu = p.get_bu()
+                u = p.get_u()
+                if bu is not None:
+                    resource.get_unit().append(p.get_bu())
+                if u is not None:
+                    resource.get_unit().append(p.get_u())
+
+                # VALUE
                 v = p.get_v()
                 vb = p.get_vb()
                 vs = p.get_vs()

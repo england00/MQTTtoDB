@@ -55,8 +55,11 @@ class MqttSubscriberClient(IMqttSubscriberClient):
                         senMLPack = SenMLPack()
                         senMLPack.from_json(message_payload)
                         form = FormatJsonSenML()
+                        resource.set_qos(message.qos)
+                        resource.set_retained(message.retain)
                         form.from_format(senMLPack, resource)
                         system.get_resource_mapper().update_resource(resource)
+                        print(message.topic)
 
     def connect(self):
         self.mqtt_subscriber_client.connect(self.broker_ip_address, self.broker_port)
