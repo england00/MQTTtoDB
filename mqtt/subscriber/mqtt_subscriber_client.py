@@ -59,7 +59,6 @@ class MqttSubscriberClient(IMqttSubscriberClient):
                         resource.set_retained(message.retain)
                         form.from_format(senMLPack, resource)
                         system.get_resource_mapper().update_resource(resource)
-                        print(message.topic)
 
     def connect(self):
         self.mqtt_subscriber_client.connect(self.broker_ip_address, self.broker_port)
