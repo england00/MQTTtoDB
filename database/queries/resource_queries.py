@@ -1,3 +1,5 @@
+import logging
+from error.general_error import GeneralError
 from models.resource_model import ResourceModel
 from models.picking_system_model import PickingSystemModel
 
@@ -36,56 +38,67 @@ def showing_resource_table_join_system(column, system_name):
 
 
 def insert_row_resource_table(resource, system):
-    if isinstance(resource, ResourceModel):
-        if isinstance(system, PickingSystemModel):
-            return """
-                INSERT INTO resource (uuid, name, version, unit, topic, uri, qos, retained, frequency, value, 
-                picking_system) 
-                VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');
-                """.format(str(resource.get_uuid()), str(resource.get_name()).replace("'", ""), resource.get_version(),
-                           str(resource.get_unit()).replace("'", ""), str(resource.get_topic()).replace("'", ""),
-                           str(resource.get_uri()).replace("'", ""), resource.get_qos(), resource.get_retained(),
-                           resource.get_frequency(), str(resource.get_value()).replace("'", ""),
-                           str(system.get_pick_and_place_id()))
-        else:
-            return """
-                INSERT INTO resource (uuid, name, version, unit, topic, uri, qos, retained, frequency, value, 
-                picking_system) 
-                VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')
-                """.format(str(resource.get_uuid()), str(resource.get_name()).replace("'", ""), resource.get_version(),
-                           str(resource.get_unit()).replace("'", ""), str(resource.get_topic()).replace("'", ""),
-                           str(resource.get_uri()).replace("'", ""), resource.get_qos(), resource.get_retained(),
-                           resource.get_frequency(), str(resource.get_value()).replace("'", ""),
-                           str(resource.get_picking_system()))
-    else:
-        raise TypeError("Error adding new resource. Only ResourceModel objects are allowed")
+    try:
+        if isinstance(resource, ResourceModel):
+            if isinstance(system, PickingSystemModel):
+                return """
+                    INSERT INTO resource (uuid, name, version, unit, topic, uri, qos, retained, frequency, value, 
+                    picking_system) 
+                    VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');
+                    """.format(str(resource.get_uuid()), str(resource.get_name()).replace("'", ""),
+                               resource.get_version(),
+                               str(resource.get_unit()).replace("'", ""), str(resource.get_topic()).replace("'", ""),
+                               str(resource.get_uri()).replace("'", ""), resource.get_qos(), resource.get_retained(),
+                               resource.get_frequency(), str(resource.get_value()).replace("'", ""),
+                               str(system.get_pick_and_place_id()))
+            else:
+                return """
+                    INSERT INTO resource (uuid, name, version, unit, topic, uri, qos, retained, frequency, value, 
+                    picking_system) 
+                    VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')
+                    """.format(str(resource.get_uuid()), str(resource.get_name()).replace("'", ""),
+                               resource.get_version(),
+                               str(resource.get_unit()).replace("'", ""), str(resource.get_topic()).replace("'", ""),
+                               str(resource.get_uri()).replace("'", ""), resource.get_qos(), resource.get_retained(),
+                               resource.get_frequency(), str(resource.get_value()).replace("'", ""),
+                               str(resource.get_picking_system()))
+    except Exception as e:
+        logging.error(str(e))
+        raise GeneralError("ERROR: problem occurred while adding new resource. "
+                           "Only ResourceModel objects are allowed") from None
 
 
 def modify_row_resource_table(resource):
-    if isinstance(resource, ResourceModel):
-        return """
-            UPDATE resource
-            SET name = '{}', version = '{}', unit = '{}', topic = '{}', uri = '{}', qos = '{}', retained = '{}', 
-            frequency = '{}', value = '{}'
-            WHERE (uuid = '{}' AND picking_system = '{}');
-            """.format(str(resource.get_name()).replace("'", ""), resource.get_version(),
-                       str(resource.get_unit()).replace("'", ""), str(resource.get_topic()).replace("'", ""),
-                       str(resource.get_uri()).replace("'", ""), resource.get_qos(), resource.get_retained(),
-                       resource.get_frequency(), str(resource.get_value()).replace("'", ""),
-                       str(resource.get_uuid()), str(resource.get_picking_system()))
-    else:
-        raise TypeError("Error adding new resource. Only ResourceModel objects are allowed")
+    try:
+        if isinstance(resource, ResourceModel):
+            return """
+                UPDATE resource
+                SET name = '{}', version = '{}', unit = '{}', topic = '{}', uri = '{}', qos = '{}', retained = '{}', 
+                frequency = '{}', value = '{}'
+                WHERE (uuid = '{}' AND picking_system = '{}');
+                """.format(str(resource.get_name()).replace("'", ""), resource.get_version(),
+                           str(resource.get_unit()).replace("'", ""), str(resource.get_topic()).replace("'", ""),
+                           str(resource.get_uri()).replace("'", ""), resource.get_qos(), resource.get_retained(),
+                           resource.get_frequency(), str(resource.get_value()).replace("'", ""),
+                           str(resource.get_uuid()), str(resource.get_picking_system()))
+    except Exception as e:
+        logging.error(str(e))
+        raise GeneralError("ERROR: problem occurred while updating the resource. "
+                           "Only ResourceModel objects are allowed") from None
 
 
 def delete_row_resource_table(resource):
-    if isinstance(resource, ResourceModel):
-        return """
-            DELETE
-            FROM resource
-            WHERE (uuid = '{}' AND picking_system = '{}')
-            """.format(str(resource.get_uuid()), str(resource.get_picking_system()))
-    else:
-        raise TypeError("Error adding new resource. Only ResourceModel objects are allowed")
+    try:
+        if isinstance(resource, ResourceModel):
+            return """
+                DELETE
+                FROM resource
+                WHERE (uuid = '{}' AND picking_system = '{}')
+                """.format(str(resource.get_uuid()), str(resource.get_picking_system()))
+    except Exception as e:
+        logging.error(str(e))
+        raise GeneralError("ERROR: problem occurred while deleting the resource. "
+                           "Only ResourceModel objects are allowed") from None
 
 
 def delete_resource_table():

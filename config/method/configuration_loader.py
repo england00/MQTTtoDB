@@ -10,4 +10,4 @@ def yaml_loader(path):
         return params
     except Exception as e:
         logging.error(str(e))
-        raise ConfigurationFileError("Error while reading configuration") from None
+        raise ConfigurationFileError("ERROR: problem occurred while reading configuration") from None

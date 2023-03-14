@@ -1,7 +1,4 @@
 class SenmlFormatError(Exception):
-    """
-    Class that implements a SenML format error.
-    """
 
     def __init__(self, message):
         super().__init__(message)

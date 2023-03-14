@@ -1,3 +1,4 @@
+import logging
 import mysql.connector
 from mysql.connector import Error
 from interfaces.database.interface_database import IDatabase
@@ -22,19 +23,19 @@ class MySQLDatabase(IDatabase):
                 passwd=self.user_password,
                 charset=self.charset
             )
-            print("Database connection done successfully")
-
+            print("MySQL connection done successfully (host = '{}', user = '{}')".
+                  format(self.host_name, self.user_name))
         except Error as err:
-            print(f"ERROR: '{err}'")
+            logging.error(str(err))
 
     # CLOSING CONNECTION
     def close_connection(self):
         try:
             self.connection.close()
-            print("Database connection closed successfully")
-
+            print("MySQL connection closed successfully (host = '{}', user = '{}')".
+                  format(self.host_name, self.user_name))
         except Error as err:
-            print(f"ERROR: '{err}'")
+            logging.error(str(err))
 
     # DATABASE CREATION
     def create_database(self, database_name):
@@ -42,10 +43,9 @@ class MySQLDatabase(IDatabase):
         try:
             query = "CREATE DATABASE {}".format(database_name)
             self.cursor.execute(query)
-            print("Database creation done successfully")
-
+            print("Creation of '{}' done successfully".format(database_name))
         except Error as err:
-            print(f"ERROR: '{err}'")
+            logging.error(str(err))
 
     # CHOOSING DATABASE
     def choose_database(self, database_name):
@@ -53,10 +53,9 @@ class MySQLDatabase(IDatabase):
         try:
             query = "USE {}".format(database_name)
             self.cursor.execute(query)
-            print("Database choice done successfully")
-
+            print("Choice of '{}' done successfully".format(database_name))
         except Error as err:
-            print(f"ERROR: '{err}'")
+            logging.error(str(err))
 
     # DATABASE DESTRUCTION
     def destroy_database(self, database_name):
@@ -64,10 +63,9 @@ class MySQLDatabase(IDatabase):
         try:
             query = "DROP DATABASE {}".format(database_name)
             self.cursor.execute(query)
-            print("Database destruction done successfully")
-
+            print("Destruction of '{}' done successfully".format(database_name))
         except Error as err:
-            print(f"ERROR: '{err}'")
+            logging.error(str(err))
 
     # READING QUERY
     def read_query(self, query):
@@ -76,9 +74,8 @@ class MySQLDatabase(IDatabase):
             self.connection.commit()
             self.cursor.execute(query)
             return self.cursor.fetchall()
-
         except Error as err:
-            print(f"ERROR: '{err}'")
+            logging.error(str(err))
 
     # WRITING QUERIES
     def execute_query(self, query):
@@ -86,7 +83,5 @@ class MySQLDatabase(IDatabase):
         try:
             self.cursor.execute(query)
             self.connection.commit()
-            print("Query done successfully")
-
         except Error as err:
-            print(f"ERROR: '{err}'")
+            logging.error(str(err))

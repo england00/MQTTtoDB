@@ -14,10 +14,18 @@ class MqttSubscriberClient(IMqttSubscriberClient):
         self.username = mqtt_client_configuration["username"]
         self.password = mqtt_client_configuration["password"]
         self.base_topic = mqtt_client_configuration["account_topic_prefix"]
-        self.topic_list = mqtt_client_configuration["topic_list"]
         self.system_mapper = system_mapper
+        self.topic_dictionary = self.obtaining_topic_list()
         self.mqtt_subscriber_client = None
         self.initialize()
+
+    def obtaining_topic_list(self):
+        topic_dictionary = {}
+        for system in self.system_mapper.get_systems().values():
+            topic_dictionary[system.get_pick_and_place_id()] = []
+            for resource in system.get_resource_mapper().get_resources().values():
+                topic_dictionary[resource.get_picking_system()].append(resource.get_topic())
+        return topic_dictionary
 
     def initialize(self):
         self.mqtt_subscriber_client = mqtt.Client(client_id=self.client_id,
@@ -31,9 +39,10 @@ class MqttSubscriberClient(IMqttSubscriberClient):
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code {}".format(rc))
-        for resource_topic in self.topic_list:
-            self.mqtt_subscriber_client.subscribe("{}/+/{}".format(self.base_topic, resource_topic))
-            print("Subscribed to: " + self.base_topic + "/+/" + resource_topic)
+        for system in self.topic_dictionary.keys():
+            for resource_topic in self.topic_dictionary[system]:
+                self.mqtt_subscriber_client.subscribe("{}/{}/{}".format(self.base_topic, system, resource_topic))
+                print("Subscribed to: " + self.base_topic + "/" + system + "/" + resource_topic)
 
     def on_message(self, client, userdata, message):
         for system in self.system_mapper.get_systems().values():

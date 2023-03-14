@@ -1,12 +1,15 @@
 systems:
-  system1:
+  pnp_unimore_fum_lab:
     pick_and_place_id: "pnp_unimore_fum_lab"
     endpoint: "/pnp_unimore_fum_lab"
+    resources_mapper: None
 
-  system2:
+  pnp_unimore_hipert_lab:
     pick_and_place_id: "pnp_unimore_hipert_lab"
     endpoint: "/pnp_unimore_hipert_lab"
+    resources_mapper: None
 
-  system3:
+  pnp_unimore_arscontrol_lab:
     pick_and_place_id: "pnp_unimore_arscontrol_lab"
     endpoint: "/pnp_unimore_arscontrol_lab"
+    resources_mapper: None

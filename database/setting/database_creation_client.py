@@ -2,14 +2,15 @@ from config.method.configuration_loader import yaml_loader
 from database.model.database import MySQLDatabase
 from database.queries.picking_system_queries import *
 from database.queries.resource_queries import *
-from mappers.resources_mapper import ResourcesMapper
+from mappers.picking_systems_mapper import PickingSystemsMapper
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # ------------------------------------------------ # CONFIGURATION # ------------------------------------------------- #
 # -------------------------------------------------------------------------------------------------------------------- #
 
 STR_DATABASE_CONFIG_FILE = "../../config/file/database.yaml"
-
+STR_RESOURCE_CONFIG_FILE = "../../config/file/resources.yaml"
+STR_SYSTEMS_CONFIG_FILE = "../../config/file/systems.yaml"
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # ---------------------------------------------------- # MAIN # ------------------------------------------------------ #
@@ -36,31 +37,17 @@ if __name__ == "__main__":
     myDB.execute_query(create_resource_table())
     myDB.execute_query(relation_resource_and_picking_system_table())
 
-    # INSERTING ROWS IN PICKING SYSTEM TABLE
-    system1 = PickingSystemModel(pick_and_place_id='000001', endpoint='/000001',
-                                 resource_mapper=ResourcesMapper(config_file_path="../../config/file/resources.yaml",
-                                                                 database=myDB))
-    myDB.execute_query(insert_row_picking_system_table(system1))
+    # CREATING AN OBJECT PickingSystemsMapper
+    picking_system_mapper = PickingSystemsMapper(config_file_path=STR_SYSTEMS_CONFIG_FILE,
+                                                 config_resource_file_path=STR_RESOURCE_CONFIG_FILE)
 
-    system2 = PickingSystemModel(pick_and_place_id='000002', endpoint='/000002',
-                                 resource_mapper=ResourcesMapper(config_file_path="../../config/file/resources.yaml",
-                                                                 database=myDB))
-    myDB.execute_query(insert_row_picking_system_table(system2))
-
-    system3 = PickingSystemModel(pick_and_place_id='000003', endpoint='/pippo',
-                                 resource_mapper=ResourcesMapper(config_file_path="../../config/file/resources.yaml",
-                                                                 database=myDB))
-    myDB.execute_query(insert_row_picking_system_table(system3))
-
-    # INSERTING ROWS IN RESOURCE TABLE
-    for resource in system1.get_resource_mapper().get_resources().values():
-        myDB.execute_query(insert_row_resource_table(resource, system1))
-
-    for resource in system1.get_resource_mapper().get_resources().values():
-        myDB.execute_query(insert_row_resource_table(resource, system2))
-
-    for resource in system1.get_resource_mapper().get_resources().values():
-        myDB.execute_query(insert_row_resource_table(resource, system3))
+    # INSERTING ROWS IN PICKING SYSTEM TABLE AND IN RESOURCE TABLE
+    for system in picking_system_mapper.get_systems().values():
+        # adding a system
+        myDB.execute_query(insert_row_picking_system_table(system))
+        # adding the resources for this system
+        for resource in system.get_resource_mapper().get_resources().values():
+            myDB.execute_query(insert_row_resource_table(resource, system))
 
     # CLOSING CONNECTION
     myDB.close_connection()
