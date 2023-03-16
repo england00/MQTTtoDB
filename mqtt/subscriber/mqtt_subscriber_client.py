@@ -41,7 +41,7 @@ class MqttSubscriberClient(IMqttSubscriberClient):
         print("Connected with result code {}".format(rc))
         for system in self.topic_dictionary.keys():
             for resource_topic in self.topic_dictionary[system]:
-                self.mqtt_subscriber_client.subscribe("{}/{}/{}".format(self.base_topic, system, resource_topic))
+                self.mqtt_subscriber_client.subscribe("{}/{}/{}".format(self.base_topic, system, resource_topic), qos=2)
                 print("Subscribed to: " + self.base_topic + "/" + system + "/" + resource_topic)
 
     def on_message(self, client, userdata, message):
