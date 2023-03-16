@@ -1,4 +1,4 @@
-# MQTTClient
+# MQTTTelemetryToDB
 
 This project is a simple implementation of a MQTT client, which receives telemetry and control 
 information from the resources of different remote pick and place systems, passing through a 
